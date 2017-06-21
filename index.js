@@ -40,8 +40,9 @@
 
     function loadImage(imgList) {
 
-        imgList.forEach(function(el, i){
-             if(isShow(el)) {
+        for(var i = 0; i < imgList.length; i++) {
+            var el = imgList[i];
+            if(isShow(el)) {
                 
                 if(is(el, 'img')) {
                     
@@ -52,8 +53,10 @@
                 }
 
                 el.className = el.className.replace(/(\s|^)lazyload(\s|$)/, '');
+                imgList.splice(i, 1);
+                i--;
             }
-        });
+        }
     }
 
     function isShow(el) {
