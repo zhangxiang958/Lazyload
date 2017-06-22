@@ -5,25 +5,51 @@
  * @updated: 2017.06.20
  */
 
-(function(win, doc){
+(function(root, factory){
 
-    var imgList = [];
+    if(typeof define === 'function' && define.amd) {
+        
+        define(factory);
+    } else if(typeof exports === 'object'){
+
+        module.exports = factory();
+    } else {
+        
+        root.Lazyload = factory();
+    }
+
+}(this, function(){
+    'use strict';
+
+    var win = window,
+    doc = document,
+    docRoot = doc.documentElement,
+    imgList = [],
+    _offset = 0,
+    iscrollInstance = null;
 
     var settings = {
-        offset: 0,
+        selector: '',
         placeholder: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC'
     }
 
     var Lazyload = {
         init: function(selector, options){
 
-            selector = selector || '.lazyload';
-            options = options || {};
-            offset = options.offset || 0;
-            this.updated(selector);
-            loadImage(imgList);
+            settings.selector   = selector || '.lazyload';
+            options             = options || {};
+            _offset             = options.offset || 0;
+            iscrollInstance     = options.iscroll || null;
+
+            this.update();
+            setTimeout(function(){
+
+                loadImage(imgList);
+            }, 500);
+            iscrollInstance ? initIscrollListener() : initNativeListener();
         },
-        updated: function(selector){
+        update: function(){
+            var selector = settings.selector;
             var elements = doc.querySelectorAll(selector);
             var placeholder = settings.placeholder;
 
@@ -61,7 +87,7 @@
 
     function isShow(el) {
         var position = el.getBoundingClientRect();
-        return (position.top >= 0 && position.left >= 0 && position.top) <= (window.innerHeight || document.documentElement.clientHeight) + parseInt(settings.offset);
+        return (position.top >= 0 && position.left >= 0 && position.top) <= (win.innerHeight || docRoot.clientHeight) + parseInt(_offset);
     }
     
     function is(el, type) {
@@ -96,10 +122,28 @@
         }
     }
 
-    var self = this;
-    window.addEventListener('scroll', function(){
-        throttle(loadImage, loadImage, [imgList], 500, 2000)();
-    });
+    var delayLoadImg = throttle(loadImage, loadImage, [imgList], 500, 2000);
 
-    win.Lazyload = Lazyload;
-})(window, document);
+    function initIscrollListener(){
+        iscrollInstance.on('scrollEnd', function(){
+            delayLoadImg();
+        });
+    }
+
+    function initNativeListener(){
+
+        if(win.addEventListener) {
+            win.addEventListener('scroll', function(){
+                delayLoadImg();
+            });
+        } else if(win.attachEvent){
+            win.attachEvent('onscroll', function(){
+                delayLoadImg();
+            });
+        } else {
+            win['onscroll'] = delayLoadImg;
+        }
+    }
+
+    return Lazyload;
+}));
