@@ -1,54 +1,49 @@
 # Lazyload
 ---
 
-> 假如有人问劳资，为什么能想到这个伟大的Idea ```ZhuangDeYiShouHaoBi``` ，劳资会告诉丫：“因为装逼”。
+> This Plug is work for wishwall(my personal project).
 ## Goal and Philosophy
 
-  “目标以及哲学”，一个标题瞬间就让项目的气质提升了八个档次。
-
-## What’s ZhuangDeYiShouHaoBi
-
-  来来来，我们来装个逼。
-
-  康忙昂，北鼻。
+  In order to imporve the performance of Mobile End's web page.
 
 ## Why lazylad
 
-  This Plug 
-  Because of my project -- wishwall,  
-
-
-## Installation
-
-  如何安装呢？当然越简单越好，体验至上。
+  Nowadays, people love to visit the web page by using mobile, but the user experience is limited to the speed of loading page.
+  On the other hand, there are many images on the web site, but most of them is unnecessary to load at the first, we can load this
+  image when user is reading the web site.
+  Therefore, this is the lazyload!
 
 ## Usage
 
 ```
-<script src="static.com/lazyload.js"></script>
+<img data-original="http://example.com/1.jpg" />
+
+<script src="static.com/lazyload.min.js"></script>
 <script>
-  Lazyload();
+  Lazyload.init();
+
+  $.ajax({
+    url: 'xxx',
+    success: function(){
+
+      Lazyload.update();
+    }
+  });
 </script>
 ```
 
-## How It Works
-
-  工作原理要不要分享下？如果较复杂还是算了吧，写这里显得不专业，来个 ```GitPage``` 提升下逼格。
-
-## Writing
-
-  肿么开始呢？给爷拉出来溜溜。
-
-
-
 ## License
 
-  over
+  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 
 ---
 
-#### 您可以通过以下方式联系到我：
-- 微博 [@聂微东](http://weibo.com/darrencode "Darren 聂微东")
-- 个人Blog [fefork.com](http://www.fefork.com/ "一枚Web技术领域的手艺人")
-- 博客园 [犀利的东哥](http://www.cnblogs.com/Darren_code/ "关注前端技术")
-- QQ群 **214199415**，群名前端Club。PS:入群__务必请提供git或blog地址__，否则进不去哈:)
+#### Contact
+- Mail [958033967@qq.com](mailto 958033967@qq.com)
+- Blog [zhangxiang958.github.io](http://zhangxiang958.github.io "shawn")
