@@ -31,7 +31,11 @@
   });
 </script>
 ```
+## Demo
 
+  https://zhangxiang958.github.io/Lazyload/demo/index.html
+
+  please check this page in Chrome Mobile Device model.
 ## License
 
   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
