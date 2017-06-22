@@ -16,11 +16,14 @@
 ## Usage
 
 ```
-<img data-original="http://example.com/1.jpg" />
+<img class="lazy" data-original="http://example.com/1.jpg" />
 
 <script src="https://zhangxiang958.github.io/Lazyload/dist/index.js"></script>
 <script>
-  Lazyload.init();
+  Lazyload.init({
+    selector: '.lazyload',
+    offset: 0    //the distance from image to the visiable zoom
+  });
 
   $.ajax({
     url: 'xxx',
