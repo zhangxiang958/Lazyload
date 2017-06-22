@@ -18,7 +18,7 @@
 ```
 <img data-original="http://example.com/1.jpg" />
 
-<script src="static.com/lazyload.min.js"></script>
+<script src="https://zhangxiang958.github.io/Lazyload/dist/index.js"></script>
 <script>
   Lazyload.init();
 
