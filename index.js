@@ -8,13 +8,13 @@
 (function(root, factory){
 
     if(typeof define === 'function' && define.amd) {
-        
+
         define([], factory);
     } else if(typeof module === 'object' && module.exports){
 
         module.exports = factory();
     } else {
-        
+
         root.Lazyload = factory();
     }
 
@@ -54,7 +54,7 @@
             var placeholder = settings.placeholder;
 
             [].slice.call(elements).forEach(function(el, i){
-                
+
                 if(is(el, 'img')) {
 
                     el.src = placeholder;
@@ -67,14 +67,21 @@
     function loadImage(imgList) {
 
         for(var i = 0; i < imgList.length; i++) {
-            var el = imgList[i];
+            var el = imgList[i], newImg;
             if(isShow(el)) {
-                
+
                 if(is(el, 'img')) {
-                    
-                    el.setAttribute('src', el.getAttribute('data-original'));
+                    newImg = new Image();
+                    (function(img, element){
+                        img.src = element.getAttribute('data-original');
+                        img.onload = function(){
+                            fadeIn(element);
+                            element.setAttribute('src', element.getAttribute('data-original'));
+                        }
+                    }(newImg, el));
+                    // el.setAttribute('src', el.getAttribute('data-original'));
                 } else {
-                    
+
                     el.style.backgroundImage = "url('" + el.getAttribute('data-original') + "')"
                 }
 
@@ -89,7 +96,7 @@
         var position = el.getBoundingClientRect();
         return (position.top >= 0 && position.left >= 0 && position.top) <= (win.innerHeight || docRoot.clientHeight) + parseInt(_offset);
     }
-    
+
     function is(el, type) {
         if(el.nodeName.toLowerCase() === type) {
             return true;
@@ -98,8 +105,15 @@
         }
     }
 
+    function fadeIn(el) {
+        setTimeout(function(){
+            el.style.opacity = +el.style.opacity + 0.05;
+            if(el.style.opacity < 1) fadeIn(el);
+        }, 25);
+    }
+
     function throttle(context, callback, args, delay, duration){
-        
+
         var start = new Date(), timer = null;
 
         return function(){
